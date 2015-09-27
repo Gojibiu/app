@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>shiny application</title>
+  <meta charset="utf-8">
+  <meta name="description" content="shiny application">
+  <meta name="author" content="Gojibiu">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>shiny application</h1>
+    <h2>property hunter</h2>
+    <p>Gojibiu<br/>to calculate the rental yield of a property</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Instructions</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>This application is for property investors to calculate the rental yield of a property and estimate the cashflow of owning the property. Your real estate agent and mortgage broker will be able to help you with the numbers.</p>
+
+<h3>Rental Yield</h3>
+
+<p>Enter the property&#39;s price and expected weekly rental income to calculate the rental yield.</p>
+
+<h3>Cashflow</h3>
+
+<p>Enter the property&#39;s holding costs to estimate the cashflow of owning the property.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Introduction to ui.R</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>If you want to know the rental yield, you must input some related price.</p>
+
+<pre><code class="r">    textInput(&#39;text&#39;, &#39;Address&#39;, value=&#39;&#39;)
+    numericInput(&#39;price&#39;, &#39;Price ($)&#39;, 550000)
+    numericInput(&#39;weeklyRent&#39;, &#39;Weekly Rent ($)&#39;, 550)
+    numericInput(&#39;weeklyRepayments&#39;, &#39;Weekly Repayments ($ per week)&#39;, 503)
+    numericInput(&#39;strataPerQuarter&#39;, &#39;Strata ($ per quarter)&#39;, 1050)
+    numericInput(&#39;councilPerQuarter&#39;, &#39;Council ($ per quarter)&#39;, 163)
+    numericInput(&#39;waterPerQuarter&#39;, &#39;Water ($ per quarter)&#39;, 180)
+    numericInput(&#39;managementFees&#39;, &#39;Management Fees ($ per week)&#39;, 38)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Introduction to sever.R</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>There are three functions to calculate the data getting from above.</p>
+
+<pre><code class="r">calculateRentalYield &lt;- function (weeklyRent, propertyPrice) {
+  result &lt;- weeklyRent * 52 / propertyPrice * 100
+  return(round(result, digits = 2))
+}
+
+calculateYearlyCashflow &lt;- function(weeklyRent, strata, council, water, managementFees, weeklyRepayments){
+  result &lt;- weeklyRent * 52 - (strata + council + water) * 4 - managementFees * 52 - weeklyRepayments * 52
+  return(round(result, digits = 2))
+}
+
+calculateWeeklyCashflow &lt;- function(weeklyRent, strata, council, water, managementFees, weeklyRepayments){
+  result &lt;- (weeklyRent * 52 - (strata + council + water) * 4 - managementFees * 52 - weeklyRepayments * 52) / 52
+  return(round(result, digits = 2))
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>How to get this app</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li><p>Clone the code using &#39;git clone <a href="https://github.com/Gojibiu/Developing-Data-Products-Assignment.git">https://github.com/Gojibiu/Developing-Data-Products-Assignment.git</a> YOURDIRECTORY&#39;</p></li>
+<li><p>Load your RStudio</p></li>
+<li><p>Set your working directory to YOURDIRECTORY using setwd(&quot;YOURDIRECTORY&quot;)</p></li>
+<li><p>Load the Shiny library using library(shiny)</p></li>
+<li><p>Run the application using runApp()</p></li>
+<li><p>You will see the application in a browser. Follow the instructions to use the application.</p></li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Thanks</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Thanks for watching my presentation, and wish you happiness!</p>
+
+<pre><code>                                           by Gojibiu
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Instructions'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Introduction to ui.R'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Introduction to sever.R'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='How to get this app'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Thanks'>
+         5
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
